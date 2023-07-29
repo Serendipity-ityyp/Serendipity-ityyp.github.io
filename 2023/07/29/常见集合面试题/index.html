@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>常见集合面试题 | Serendipity</title><meta name="author" content="Serendipity"><meta name="copyright" content="Serendipity"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="常见集合篇ArrayList底层实现是动态数组 LinkedList底层实现的是双向链表 HashMap底层实现使用的是众多数据结构，包括数组，链表|红黑树，散列表等 常见复杂度表现形式：  速记口诀：常对幂指阶	越在上面的性能越高 数组是一种连续的内存空间存储相同数据类型数据的线性数据结构。 寻址公式：arr[i] &#x3D; baseAddress + i * dataTypeSize Ar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见集合面试题">
+<meta property="og:url" content="http://example.com/2023/07/29/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="Serendipity">
+<meta property="og:description" content="常见集合篇ArrayList底层实现是动态数组 LinkedList底层实现的是双向链表 HashMap底层实现使用的是众多数据结构，包括数组，链表|红黑树，散列表等 常见复杂度表现形式：  速记口诀：常对幂指阶	越在上面的性能越高 数组是一种连续的内存空间存储相同数据类型数据的线性数据结构。 寻址公式：arr[i] &#x3D; baseAddress + i * dataTypeSize Ar">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/img6.webp">
+<meta property="article:published_time" content="2023-07-29T04:39:50.000Z">
+<meta property="article:modified_time" content="2023-07-29T04:39:50.000Z">
+<meta property="article:author" content="Serendipity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/img6.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/07/29/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '常见集合面试题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-29 12:39:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/person.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/img6.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="Serendipity"><span class="site-name">Serendipity</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">常见集合面试题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-29T04:39:50.000Z" title="更新于 2023-07-29 12:39:50">2023-07-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="常见集合面试题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="常见集合篇"><a href="#常见集合篇" class="headerlink" title="常见集合篇"></a>常见集合篇</h2><p>ArrayList底层实现是动态数组</p>
+<p>LinkedList底层实现的是双向链表</p>
+<p>HashMap底层实现使用的是众多数据结构，包括数组，链表|红黑树，散列表等</p>
+<p>常见复杂度表现形式：</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230727112846276.png" alt="image-20230727112846276" style="zoom: 50%;" /><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230727113105746.png" alt="image-20230727113105746" style="zoom: 67%;" /></p>
+<p>速记口诀：常对幂指阶	越在上面的性能越高</p>
+<p>数组是一种连续的内存空间存储相同数据类型数据的线性数据结构。</p>
+<p>寻址公式：arr[i] &#x3D; baseAddress + i * dataTypeSize</p>
+<h5 id="ArrayList-list-x3D-new-ArrayList-10-中的list扩容了几次？"><a href="#ArrayList-list-x3D-new-ArrayList-10-中的list扩容了几次？" class="headerlink" title="ArrayList list &#x3D; new ArrayList(10)中的list扩容了几次？"></a>ArrayList list &#x3D; new ArrayList(10)中的list扩容了几次？</h5><p>答：该语句只是声明和实例了一个ArrayList，指定了容量为10，未扩容。</p>
+<h5 id="如何实现数组和List之间的转换？"><a href="#如何实现数组和List之间的转换？" class="headerlink" title="如何实现数组和List之间的转换？"></a>如何实现数组和List之间的转换？</h5><p>数组转List，使用JDK中的java.util.Arraysz工具类的asList方法</p>
+<p>List转数组，使用List的toArray方法。无参toArray方法返回Object数组，传入初始化长度的数组对象，返回该对象数组。</p>
+<h5 id="用Arrays-asList转List后，如果修改了数组内容，list受影响吗，List用toArray转数组后，如果修改了List内容，数组受影响吗？"><a href="#用Arrays-asList转List后，如果修改了数组内容，list受影响吗，List用toArray转数组后，如果修改了List内容，数组受影响吗？" class="headerlink" title="用Arrays.asList转List后，如果修改了数组内容，list受影响吗，List用toArray转数组后，如果修改了List内容，数组受影响吗？"></a>用Arrays.asList转List后，如果修改了数组内容，list受影响吗，List用toArray转数组后，如果修改了List内容，数组受影响吗？</h5><p>答：数组转List受影响，List转数组不受影响</p>
+<p>Arrays.toList转换list之后，如果修改了数组的内容，list会受影响，因为它的底层使用的Arrays类中的一个内部类ArrayList来构造的集合，在这个集合的构造器中，把我们传入的这个集合进行了包装而已，最终指向的都是同一个内存地址。</p>
+<p>list用了toArray转数组后，如果修改了list内容，数组不会影响，当调用了toArray以后，在底层是它进行了数组的拷贝，跟原来的元素就没啥关系了所以即使list修改了以后数组也不受影响。</p>
+<p>链表</p>
+<p>单向链表：每个结点包括两个部分：一个是存储元素的数据域，另一个是存储下一个结点地址的指针域。记录下个节点的指针叫作后继指针next。链表中的每一个元素称之为结点（Node），物理存储单元上，非连续。非顺序的存储结构。</p>
+<p>双向链表：每个结点不止有一个后继指针next指向后面的结点，每一个前驱指针prev指向前面的结点</p>
+<h5 id="ArrayList和LinkedList的区别是什么？"><a href="#ArrayList和LinkedList的区别是什么？" class="headerlink" title="ArrayList和LinkedList的区别是什么？"></a>ArrayList和LinkedList的区别是什么？</h5><p>答：底层数据结构</p>
+<p>ArrayList底层数据结构是动态数组，LinkedList底层数据结构是双向链表</p>
+<p>操作数据效率</p>
+<p>ArrayList查找效率高，增、删、修改效率低，LinkedList增删、修改效率高</p>
+<p>内存空间占用</p>
+<p>ArrayList内存连续，节省内存；LinkedList需要存储数据和两个指针，更占内存</p>
+<p>线程安全</p>
+<p>ArrayList和LinkedList都不是线程安全的</p>
+<p>如果需要保证线程安全，有两种方案：1、在方法内使用，局部变量则是线程安全的；2、使用线程安全的ArrayList和LinkedList</p>
+<h5 id="说一下HashMap的实现原理？"><a href="#说一下HashMap的实现原理？" class="headerlink" title="说一下HashMap的实现原理？"></a>说一下HashMap的实现原理？</h5><p>HashMap的数据结构：底层使用hash表数据结构，即数组和链表或红黑树</p>
+<p>1当我们往HashMap中put元素时，利用key的hashCode重新计算当前对象的元素在数组中的下标</p>
+<p>2存储时，如果出现hash值相同，此时有两种情况：a如果key相同，则覆盖原始值；如果key不同（出现冲突），则当前的key-value放入链表或红黑树中。</p>
+<p>3获取时，直接找到hash值对应的下标，再进一步判断key是否相同，从而找到对应值。</p>
+<h5 id="HashMap的jdk1-7和jdk1-8有什么区别？"><a href="#HashMap的jdk1-7和jdk1-8有什么区别？" class="headerlink" title="HashMap的jdk1.7和jdk1.8有什么区别？"></a>HashMap的jdk1.7和jdk1.8有什么区别？</h5><p>JDK1.8之前采用的是拉链法。拉链法：将链表和数组结合。也就是说创建一个链表数组，数组中每一个格就是一个链表。若遇到哈希冲突，则将冲突的值加到链表中即可。</p>
+<p>JDK1.8在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时并且数组长度达到64时，将链表转化为红黑树以减少搜索时间。扩容resize()时，红黑树拆成树的节点数小于等于临界值6个，则退化成链表。</p>
+<h5 id="能说一下HashMap的put方法的具体流程吗？"><a href="#能说一下HashMap的put方法的具体流程吗？" class="headerlink" title="能说一下HashMap的put方法的具体流程吗？"></a>能说一下HashMap的put方法的具体流程吗？</h5><p>1.判断键值对数组table是否为空或为null，否则执行resize()进行扩容（初始化）</p>
+<p>2.根据键值key计算hash值得到数组索引</p>
+<p>3.判断table[i]&#x3D;&#x3D;null，条件成立，直接新建结点添加</p>
+<p>4.如果table[i]&#x3D;&#x3D;null，不成立</p>
+<p>4.1判断table[i]的首个元素是否和key一样，如果相同直接覆盖value</p>
+<p>4.2判断table[i]是否为treeNode，即table[i]是否是红黑树，如果是红黑树，则直接在树中插入键值对。</p>
+<p>4.3遍历table[i]，链表的尾部插入数据，然后判断链表的长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，遍历过程中若发现key已经存在直接覆盖value</p>
+<p>5.插入成功后，判断实际存在的键值对数量size是否超过了最大容量threshold（数组长度*0.75），如果超过，进行扩容。</p>
+<h5 id="能讲一下HashMap的扩容机制吗？"><a href="#能讲一下HashMap的扩容机制吗？" class="headerlink" title="能讲一下HashMap的扩容机制吗？"></a>能讲一下HashMap的扩容机制吗？</h5><p>再添加元素或初始化的时候需要调用resize方法进行扩容，第一次添加数据初始化数组长度为16，以后每次扩容都是达到了扩容阈值（数组长度*0.75）</p>
+<p>每次扩容的时候，都是扩容之前容量的2倍</p>
+<p>扩容之后，会创建一个数组，需要把老数组中的数据挪到新数组中</p>
+<p>没有hash冲突的结点，则直接使用e.hash &amp; (newCap - 1)计算新数组的索引位置</p>
+<p>如果是红黑树，走红黑树的添加</p>
+<p>如果是链表，则需要遍历链表可能需要拆分链表，判断（e.hash &amp; oldCap）是否为0，该元素的位置要么停留在原始位置，要么移动到原始位置+增加的数组大小这个位置上</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Serendipity</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/07/29/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/">http://example.com/2023/07/29/%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Serendipity</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/img6.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/29/%E6%A8%A1%E6%9D%BF/" title="模板"><img class="cover" src="/img/img3.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">模板</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/28/Java%E7%AC%94%E8%AE%B0/" title="Java笔记"><img class="cover" src="/img/img1.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java笔记</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/person.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Serendipity</div><div class="author-info__description">3026672601@qq.com</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Serendipity-ityyp"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Serendipity-ityyp" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%9B%86%E5%90%88%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">常见集合篇</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ArrayList-list-x3D-new-ArrayList-10-%E4%B8%AD%E7%9A%84list%E6%89%A9%E5%AE%B9%E4%BA%86%E5%87%A0%E6%AC%A1%EF%BC%9F"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">ArrayList list &#x3D; new ArrayList(10)中的list扩容了几次？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E5%92%8CList%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">如何实现数组和List之间的转换？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%A8Arrays-asList%E8%BD%ACList%E5%90%8E%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%BF%AE%E6%94%B9%E4%BA%86%E6%95%B0%E7%BB%84%E5%86%85%E5%AE%B9%EF%BC%8Clist%E5%8F%97%E5%BD%B1%E5%93%8D%E5%90%97%EF%BC%8CList%E7%94%A8toArray%E8%BD%AC%E6%95%B0%E7%BB%84%E5%90%8E%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%BF%AE%E6%94%B9%E4%BA%86List%E5%86%85%E5%AE%B9%EF%BC%8C%E6%95%B0%E7%BB%84%E5%8F%97%E5%BD%B1%E5%93%8D%E5%90%97%EF%BC%9F"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">用Arrays.asList转List后，如果修改了数组内容，list受影响吗，List用toArray转数组后，如果修改了List内容，数组受影响吗？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ArrayList%E5%92%8CLinkedList%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">ArrayList和LinkedList的区别是什么？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8BHashMap%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">1.0.0.5.</span> <span class="toc-text">说一下HashMap的实现原理？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#HashMap%E7%9A%84jdk1-7%E5%92%8Cjdk1-8%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.0.0.6.</span> <span class="toc-text">HashMap的jdk1.7和jdk1.8有什么区别？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%BD%E8%AF%B4%E4%B8%80%E4%B8%8BHashMap%E7%9A%84put%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B%E5%90%97%EF%BC%9F"><span class="toc-number">1.0.0.7.</span> <span class="toc-text">能说一下HashMap的put方法的具体流程吗？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%BD%E8%AE%B2%E4%B8%80%E4%B8%8BHashMap%E7%9A%84%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%90%97%EF%BC%9F"><span class="toc-number">1.0.0.8.</span> <span class="toc-text">能讲一下HashMap的扩容机制吗？</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/07/29/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/" title="MySQL面试题"><img src="/img/img6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL面试题"/></a><div class="content"><a class="title" href="/2023/07/29/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/" title="MySQL面试题">MySQL面试题</a><time datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/29/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/" title="Redis面试题"><img src="/img/img5.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis面试题"/></a><div class="content"><a class="title" href="/2023/07/29/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/" title="Redis面试题">Redis面试题</a><time datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/29/Spring%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95%E9%A2%98/" title="Spring框架面试题"><img src="/img/img10.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring框架面试题"/></a><div class="content"><a class="title" href="/2023/07/29/Spring%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95%E9%A2%98/" title="Spring框架面试题">Spring框架面试题</a><time datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/29/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="常见技术场景面试题"><img src="/img/img4.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常见技术场景面试题"/></a><div class="content"><a class="title" href="/2023/07/29/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="常见技术场景面试题">常见技术场景面试题</a><time datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/29/%E6%A8%A1%E6%9D%BF/" title="模板"><img src="/img/img3.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="模板"/></a><div class="content"><a class="title" href="/2023/07/29/%E6%A8%A1%E6%9D%BF/" title="模板">模板</a><time datetime="2023-07-29T04:39:50.000Z" title="发表于 2023-07-29 12:39:50">2023-07-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Serendipity</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="60198" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><div class="aplayer no-destroy" data-id="8540905021" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" > </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
