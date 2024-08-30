@@ -24,7 +24,7 @@
 
   
 
-  <title>Srendipity</title>
+  <title>java8/11/17多环境配置 | Srendipity</title>
 
   
 
@@ -101,17 +101,12 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap"></h1>
+          <h1 class="title-wrap">java8/11/17多环境配置</h1>
           <h2 class="title-sub-wrap">
             <strong>ityyp</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-08-28T04:32:28.437Z" itemprop="datePublished">2024-08-28</time>
+            <time  class="article-date" datetime="2024-08-30T04:13:41.000Z" itemprop="datePublished">2024-08-30</time>
           </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-08-22T13:05:50.947Z" itemprop="dateUpdated">2024-08-22</time>
-            </h2>
           
           
           <ul class="wrap-list dark">
@@ -141,18 +136,40 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <p>Linux装机修改ip</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"></span><br><span class="line">--修改</span><br><span class="line">ONBOOT=yes</span><br><span class="line">BOOTPROTO=static</span><br><span class="line"></span><br><span class="line">--添加</span><br><span class="line">IPADDR=192.168.128.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.128.2</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line"></span><br><span class="line">--删除</span><br><span class="line">UUID</span><br></pre></td></tr></table></figure>
-
-<p>重启网络服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br><span class="line">systemctl restart network.service</span><br><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>禁用防火墙</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld --临时</span><br><span class="line">systemctl disable firewalld  --长期</span><br></pre></td></tr></table></figure>
-
-<p>解除软件安装限制</p>
-<p>vi &#x2F;etc&#x2F;selinux&#x2F;config</p>
-<p>SELINUX&#x3D;disable</p>
+        <h1 id="java8-11-17多环境配置"><a href="#java8-11-17多环境配置" class="headerlink" title="java8&#x2F;11&#x2F;17多环境配置"></a>java8&#x2F;11&#x2F;17多环境配置</h1><h2 id="JDK、JRE、JVM关系"><a href="#JDK、JRE、JVM关系" class="headerlink" title="JDK、JRE、JVM关系"></a>JDK、JRE、JVM关系</h2><p>JDK是SDK（广义软件开发工具包）的其中一种，是Java SDK（Java开发工具包）的简称，提供了Java的开发环境；<br>JRE（Java运行环境）包含在JDK安装包里，如果只安装JRE，那么就只能运行Java程序而不能进行开发（因为没有编译器和调试器）；<br>JVM虚拟机是JRE的一部分，负责把Java程序翻译为字节码。</p>
+<h2 id="JDK8-11-17多环境配置"><a href="#JDK8-11-17多环境配置" class="headerlink" title="JDK8&#x2F;11&#x2F;17多环境配置"></a>JDK8&#x2F;11&#x2F;17多环境配置</h2><p>JDK8（&#x3D;Java8&#x3D;JDK1.8），这个版本较为成熟稳定，是JDK的一个重要长期支持版本(LTS)，在生产环境中使用非常广泛；</p>
+<p>JDK11，增加了大量实用的新特性，包括新的 ZGC、云计算监控诊断、Http Client、支持Unicode 10.0.0等，一共包含 17 个 JDK 增强提案；</p>
+<p>JDK17，最新长期支持版本， 具有switch 新增模式，增加 Realed class 密封类，Parallel GC 默认启用已经浮点运算更加严格；<br><a target="_blank" rel="noopener" href="http://www.codebaoku.com/jdk/jdk-index.html">JDK下载-编程宝库</a><br>双击下载好的MSI或EXE文件，next<br><img src="http://212.64.20.228:9000/blog/article/articleImage/20c92cd7-fd0b-4570-92d3-a798a96b4a07.png"></p>
+<p>自行选择安装目录，我直接默认，next<br><img src="http://212.64.20.228:9000/blog/article/articleImage/541f4723-fb41-4f4a-8374-2d541ace6519.png"></p>
+<p>安装完成，close<br><img src="http://212.64.20.228:9000/blog/article/articleImage/a4240192-244a-46da-88c1-751989207c3f.png"></p>
+<p>继续安装JDK8，下一步<br><img src="http://212.64.20.228:9000/blog/article/articleImage/6158aeda-e960-46e8-852f-6a2062785c28.png"></p>
+<p>继续默认路径，下一步</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/fd673256-922b-48c9-bc54-2382c5d9d7f2.png"></p>
+<p>有需要可以改，不改下一步</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/01df7b14-0a9e-4c60-b621-b9c544dbfab7.png"></p>
+<p>关闭</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/ec8483af-6636-406a-830b-6f52f8e5555a.png"></p>
+<p>JDK11同理（省略……）</p>
+<p>安装好啦</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/33c05137-76de-4bd9-89e5-c3ced072c68d.png"></p>
+<p>下面开始配置环境变量，win+R输入sysdm.cpl，回车-&gt;高级</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/25ff2212-5664-481f-ab21-b906ac1be0fa.png"></p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/09f2d733-ed2a-49ba-a749-536a104527f2.png"></p>
+<p>为三个jdk指定安装目录变量，用数字区分</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/d3421057-e714-46cc-b36f-4bc278f824f5.png"></p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/6231ae4f-da6f-4188-b26e-b19957d2c2ec.png"></p>
+<p>再建一个JAVA_HOME的变量，指定要使用的jdk版本，我先指定为JDK17，如果要切换版本，更改这个变量值就好</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/de6edbb9-100f-48ac-9904-aaf2f45add3f.png"></p>
+<p>配置Path环境变量</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/1afa3170-a99d-4919-b55f-fccc0d4d078d.png"></p>
+<p>新建两条变量，注意将%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;分开添加</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/38859b8b-45b8-4515-ad4d-d6140c14e76c.png"></p>
+<p>配置CLASSPATH环境变量</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/c9f80ddf-f87c-4bac-992d-d4462bb03780.png"></p>
+<p>配置完成，连按确定关闭对话框。</p>
+<p>win+R，打开cmd命令行，输入java -version</p>
+<p><img src="http://212.64.20.228:9000/blog/article/articleImage/35ca6ec1-91e4-432b-b6b4-1c13cab1da43.png"></p>
+<p>切换JDK版本时时，只需要更换JAVA_HOME的变量值即可<br><img src="http://212.64.20.228:9000/blog/article/articleImage/38eac618-f671-4bfe-9055-f23c0ce5bbe2.png"><br><img src="http://212.64.20.228:9000/blog/article/articleImage/3bbabbe1-a383-4c28-a4a1-c4536f85dfa0.png"><br><img src="http://212.64.20.228:9000/blog/article/articleImage/32d2920f-afab-4fb6-9c16-465be2d6283f.png"><br>特别提示：每次更改后需要重新打开cmd窗口。</p>
 
       </section>
 
@@ -166,8 +183,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/08/28/test/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">test</h2>
+        <a href="/2024/08/29/Linux%E8%A3%85%E6%9C%BA%E4%BF%AE%E6%94%B9ip/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux装机修改ip</h2>
         </a>
       
       <div class="card-text--row">Older</div>
@@ -209,7 +226,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>3</span>
+        <span>4</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

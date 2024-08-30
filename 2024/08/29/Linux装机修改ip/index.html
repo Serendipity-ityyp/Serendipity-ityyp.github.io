@@ -24,7 +24,7 @@
 
   
 
-  <title>test | Srendipity</title>
+  <title>Linux装机修改ip | Srendipity</title>
 
   
 
@@ -101,12 +101,17 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">test</h1>
+          <h1 class="title-wrap">Linux装机修改ip</h1>
           <h2 class="title-sub-wrap">
             <strong>ityyp</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-08-28T04:13:41.000Z" itemprop="datePublished">2024-08-28</time>
+            <time  class="article-date" datetime="2024-08-29T04:13:41.000Z" itemprop="datePublished">2024-08-29</time>
           </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2024-08-30T14:34:40.342Z" itemprop="dateUpdated">2024-08-30</time>
+            </h2>
           
           
           <ul class="wrap-list dark">
@@ -136,7 +141,18 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <p>滴滴</p>
+        <p>Linux装机修改ip</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"></span><br><span class="line">--修改</span><br><span class="line">ONBOOT=yes</span><br><span class="line">BOOTPROTO=static</span><br><span class="line"></span><br><span class="line">--添加</span><br><span class="line">IPADDR=192.168.128.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.128.2</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line"></span><br><span class="line">--删除</span><br><span class="line">UUID</span><br></pre></td></tr></table></figure>
+
+<p>重启网络服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br><span class="line">systemctl restart network.service</span><br><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>禁用防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld --临时</span><br><span class="line">systemctl disable firewalld  --长期</span><br></pre></td></tr></table></figure>
+
+<p>解除软件安装限制</p>
+<p>vi &#x2F;etc&#x2F;selinux&#x2F;config</p>
+<p>SELINUX&#x3D;disable</p>
 
       </section>
 
@@ -149,8 +165,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/08/29/Linux%E8%A3%85%E6%9C%BA%E4%BF%AE%E6%94%B9ip/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">Linux装机修改ip</h2>
+        <a href="/2024/08/30/java8%2011%2017%E5%A4%9A%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">java8/11/17多环境配置</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -164,8 +180,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/08/28/hello-world/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">Hello World</h2>
+        <a href="/2024/08/28/test/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">test</h2>
         </a>
       
       <div class="card-text--row">Older</div>
