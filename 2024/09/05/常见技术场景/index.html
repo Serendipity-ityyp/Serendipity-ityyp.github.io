@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="ityyp">
+  
+
+  
+
+  
+
+  <title>Srendipity</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Srendipity
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap"></h1>
+          <h2 class="title-sub-wrap">
+            <strong>ityyp</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-09-05T11:36:43.745Z" itemprop="datePublished">2024-09-05</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: 常见技术场景</span><br><span class="line">date: 2024-09-11 13:14:52</span><br><span class="line">tags:</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见技术场景"><a href="#常见技术场景" class="headerlink" title="常见技术场景"></a>常见技术场景</h2><h3 id="1-单点登录这块怎么实现的"><a href="#1-单点登录这块怎么实现的" class="headerlink" title="1.单点登录这块怎么实现的"></a>1.单点登录这块怎么实现的</h3><h4 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h4><p>单点登录的英文名叫做：Single Sign On（简称<strong>SSO</strong>）,只需要登录一次，就可以访问所有信任的应用系统</p>
+<p>在<strong>以前</strong>的时候，一般我们就<strong>单系统</strong>，所有的功能都在同一个系统上。</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521113500488.png" alt="image-20230521113500488"></p>
+<p>单体系统的session共享</p>
+<ul>
+<li><p><strong>登录</strong>：将用户信息保存在Session对象中</p>
+</li>
+<li><ul>
+<li>如果在Session对象中能查到，说明已经登录</li>
+<li>如果在Session对象中查不到，说明没登录（或者已经退出了登录）</li>
+</ul>
+</li>
+<li><p><strong>注销（退出登录）</strong>：从Session中删除用户的信息</p>
+</li>
+</ul>
+<p>后来，我们为了<strong>合理利用资源和降低耦合性</strong>，于是把单系统<strong>拆分</strong>成多个子系统。</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521113544219.png" alt="image-20230521113544219"></p>
+<p>多系统即可能有多个Tomcat，而Session是依赖当前系统的Tomcat，所以系统A的Session和系统B的Session是<strong>不共享</strong>的。</p>
+<p>解决系统之间Session不共享问题有一下几种方案：</p>
+<ul>
+<li>Tomcat集群Session全局复制（最多支持5台tomcat，不推荐使用）</li>
+<li>JWT(常见)</li>
+<li>Oauth2</li>
+<li>CAS</li>
+<li>自己实现（redis+token）</li>
+</ul>
+<h4 id="1-2-JWT解决单点登录"><a href="#1-2-JWT解决单点登录" class="headerlink" title="1.2 JWT解决单点登录"></a>1.2 JWT解决单点登录</h4><p>现在有一个微服务的简单架构，如图：</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521113906521.png" alt="image-20230521113906521"></p>
+<p>使用jwt解决单点登录的流程如下：</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521113941467.png" alt="image-20230521113941467"></p>
+<h4 id="1-3-回答要点"><a href="#1-3-回答要点" class="headerlink" title="1.3 回答要点"></a>1.3 回答要点</h4><p>1，先解释什么是单点登录</p>
+<p>单点登录的英文名叫做：Single Sign On（简称<strong>SSO</strong>）</p>
+<p>2，介绍自己项目中涉及到的单点登录（即使没涉及过，也可以说实现的思路）</p>
+<p>3，介绍单点登录的解决方案，以JWT为例</p>
+<p>​	   I.  用户访问其他系统，会在网关判断token是否有效</p>
+<p>​     II.  如果token无效则会返回401（认证失败）前端跳转到登录页面</p>
+<p>​    III.  用户发送登录请求，返回浏览器一个token，浏览器把token保存到cookie</p>
+<p>​    IV.  再去访问其他服务的时候，都需要携带token，由网关统一验证后路由到目标服务</p>
+<h3 id="2-权限认证是如何实现的"><a href="#2-权限认证是如何实现的" class="headerlink" title="2.权限认证是如何实现的"></a>2.权限认证是如何实现的</h3><h4 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h4><p>后台的管理系统，更注重权限控制，最常见的就是RBAC模型来指导实现权限</p>
+<p>RBAC(Role-Based Access Control)基于角色的访问控制</p>
+<ul>
+<li><p>3个基础部分组成：用户、角色、权限</p>
+</li>
+<li><p>具体实现</p>
+<ul>
+<li>5张表（用户表、角色表、权限表、用户角色中间表、角色权限中间表）</li>
+<li>7张表（用户表、角色表、权限表、菜单表、用户角色中间表、角色权限中间表、权限菜单中间表）</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-RBAC权限模型"><a href="#2-2-RBAC权限模型" class="headerlink" title="2.2 RBAC权限模型"></a>2.2 RBAC权限模型</h4><p>最常见的5张表的关系</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521114305463.png" alt="image-20230521114305463"></p>
+<p><strong>数据流转</strong></p>
+<p>张三具有什么权限呢？</p>
+<p>流程：张三登录系统—&gt; 查询张三拥有的角色列表—&gt;再根据角色查询拥有的权限</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521114432028.png" alt="image-20230521114432028"></p>
+<p>在实际的开发中，也会使用权限框架完成权限功能的实现，并且设置多种粒度，常见的框架有：</p>
+<ul>
+<li>Apache shiro  </li>
+<li>Spring security（推荐）</li>
+</ul>
+<h4 id="2-3-回答要点"><a href="#2-3-回答要点" class="headerlink" title="2.3 回答要点"></a>2.3 回答要点</h4><ul>
+<li><p>后台管理系统的开发经验</p>
+</li>
+<li><p>介绍RBAC权限模型5张表的关系（用户、角色、权限）</p>
+</li>
+<li><p>权限框架：Spring security</p>
+</li>
+</ul>
+<h3 id="3-上传数据的安全性你们怎么控制？"><a href="#3-上传数据的安全性你们怎么控制？" class="headerlink" title="3.上传数据的安全性你们怎么控制？"></a>3.上传数据的安全性你们怎么控制？</h3><h4 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h4><p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521124717749.png" alt="image-20230521124717749"></p>
+<blockquote>
+<p>这里的安全性，主要说的是，浏览器访问后台，需要经过网络传输，有可能会出现安全的问题</p>
+</blockquote>
+<p>解决方案：使用非对称加密（或对称加密），给前端一个公钥让他把数据加密后传到后台，后台负责解密后处理数据</p>
+<h4 id="3-2-对称加密"><a href="#3-2-对称加密" class="headerlink" title="3.2 对称加密"></a>3.2 对称加密</h4><p>文件加密和解密使用相同的密钥，即加密密钥也可以用作解密密钥</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521125012727.png" alt="image-20230521125012727"></p>
+<ul>
+<li><p>数据发信方将明文和加密密钥一起经过特殊的加密算法处理后，使其变成复杂的加密密文发送出去，</p>
+</li>
+<li><p>收信方收到密文后，若想解读出原文，则需要使用加密时用的密钥以及相同加密算法的逆算法对密文进行解密，才能使其回复成可读明文。</p>
+</li>
+<li><p>在对称加密算法中，使用的密钥只有一个，收发双方都使用这个密钥，这就需要解密方事先知道加密密钥。</p>
+</li>
+</ul>
+<p><strong>优点:</strong>  对称加密算法的优点是算法公开、计算量小、加密速度快、加密效率高。</p>
+<p><strong>缺点:</strong>  没有非对称加密安全.</p>
+<p><strong>用途：</strong> 一般用于保存用户手机号、身份证等敏感但能解密的信息。</p>
+<p><strong>常见的对称加密算法有</strong>: <code>AES、DES、3DES、Blowfish、IDEA、RC4、RC5、RC6、HS256 </code></p>
+<h4 id="3-3-非对称加密"><a href="#3-3-非对称加密" class="headerlink" title="3.3 非对称加密"></a>3.3 非对称加密</h4><p>两个密钥：公开密钥（publickey）和私有密钥，公有密钥加密，私有密钥解密</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521125136717.png" alt="image-20230521125136717"></p>
+<p>解释:  同时生成两把密钥：私钥和公钥，私钥隐秘保存，公钥可以下发给信任客户端.</p>
+<p>加密与解密:</p>
+<ul>
+<li>私钥加密，持有公钥才可以解密</li>
+<li>公钥加密，持有私钥才可解密</li>
+</ul>
+<p>签名:</p>
+<ul>
+<li>私钥签名,  持有公钥进行验证是否被篡改过.</li>
+</ul>
+<p>**优点: ** 非对称加密与对称加密相比，其安全性更好；</p>
+<p><strong>缺点:</strong>  非对称加密的缺点是加密和解密花费时间长、速度慢，只适合对少量数据进行加密。<br><strong>用途：</strong> 一般用于签名和认证。私钥服务器保存, 用来加密,  公钥客户拿着用于对于令牌或者签名的解密或者校验使用.</p>
+<p><strong>常见的非对称加密算法有：</strong> RSA、DSA（数字签名用）、ECC（移动设备用）、RS256 (采用SHA-256 的 RSA 签名) </p>
+<h4 id="3-4-回答要点"><a href="#3-4-回答要点" class="headerlink" title="3.4 回答要点"></a>3.4 回答要点</h4><ul>
+<li>使用非对称加密（或对称加密），给前端一个公钥让他把数据加密后传到后台，后台解密后处理数据<ul>
+<li>传输的数据很大建议使用对称加密，不过不能保存敏感信息</li>
+<li>传输的数据较小，要求安全性高，建议采用非对称加密</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-你负责项目的时候遇到了哪些比较棘手的问题"><a href="#4-你负责项目的时候遇到了哪些比较棘手的问题" class="headerlink" title="4.你负责项目的时候遇到了哪些比较棘手的问题"></a>4.你负责项目的时候遇到了哪些比较棘手的问题</h3><p>这个面试题主要考察的是，</p>
+<ul>
+<li>你是否有过开发经验</li>
+<li>是否是核心开发人员</li>
+</ul>
+<p>有4个方面可以回答，只要挑出一个回答就行了</p>
+<p><strong>（1）设计模式</strong></p>
+<ul>
+<li>工厂模式+策略</li>
+<li>责任链模式</li>
+</ul>
+<blockquote>
+<p>回答思路</p>
+<p>1，什么背景（技术问题）</p>
+<p>2，过程（解决问题的过程）</p>
+<p>3，最终落地方案</p>
+</blockquote>
+<p>举例：</p>
+<p>①：介绍登录业务（一开始没有用设计模式，所有的登录方式都柔和在一个业务类中，不过，发现需求经常改）</p>
+<p>②：登录方式经常会增加或更换，每次都要修改业务层代码，所以，经过我的设计，使用了工厂设计模式和策略模式，解决了，经常修改业务层代码的问题</p>
+<p>③：详细介绍一下工厂模式和策略模式（参考前面设计模式的课程）</p>
+<p><strong>（2）线上BUG</strong></p>
+<ul>
+<li>CPU飙高</li>
+<li>内存泄漏</li>
+<li>线程死锁</li>
+<li>….</li>
+</ul>
+<p>回答方式参考上面的回答思路，具体问题可以参考前面的课程（JVM和多线程相关的面试题）</p>
+<p><strong>（3）调优</strong></p>
+<ul>
+<li>慢接口</li>
+<li>慢SQL</li>
+<li>缓存方案</li>
+</ul>
+<p><strong>（4）组件封装</strong></p>
+<ul>
+<li>分布式锁</li>
+<li>接口幂等</li>
+<li>分布式事务</li>
+<li>支付通用</li>
+</ul>
+<h3 id="5-你们项目中日志怎么采集的"><a href="#5-你们项目中日志怎么采集的" class="headerlink" title="5.你们项目中日志怎么采集的"></a>5.你们项目中日志怎么采集的</h3><h4 id="5-1-问题"><a href="#5-1-问题" class="headerlink" title="5.1 问题"></a>5.1 问题</h4><p>1，为什么要采集日志？</p>
+<p>日志是定位系统问题的重要手段，可以根据日志信息快速定位系统中的问题</p>
+<p>2，采集日志的方式有哪些?</p>
+<ul>
+<li><p>ELK：即Elasticsearch、Logstash和Kibana三个软件的首字母</p>
+</li>
+<li><p>常规采集：按天保存到一个日志文件<img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521232726959.png" alt="image-20230521232726959"></p>
+</li>
+</ul>
+<h4 id="5-2-ELK基本架构"><a href="#5-2-ELK基本架构" class="headerlink" title="5.2 ELK基本架构"></a>5.2 ELK基本架构</h4><p>ELK即Elasticsearch、Logstash和Kibana三个开源软件的缩写</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521232913086.png" alt="image-20230521232913086"></p>
+<ul>
+<li><p>Elasticsearch<br>Elasticsearch  全文搜索和分析引擎，对大容量的数据进行接近实时的存储、搜索和分析操作。</p>
+</li>
+<li><p>Logstash<br>Logstash是一个数据收集引擎，它可以动态的从各种数据源搜集数据，并对数据进行过滤、分析和统一格式等操作，并将输出结果存储到指定位置上</p>
+</li>
+<li><p>Kibana<br>Kibana是一个数据分析和可视化平台，通常与Elasticsearch配合使用，用于对其中的数据进行搜索、分析，并且以统计图标的形式展示。</p>
+</li>
+</ul>
+<h4 id="5-3-参考回答"><a href="#5-3-参考回答" class="headerlink" title="5.3 参考回答"></a>5.3 参考回答</h4><ul>
+<li><p>我们搭建了ELK日志采集系统</p>
+</li>
+<li><p>介绍ELK的三个组件：</p>
+<ul>
+<li>Elasticsearch是全文搜索分析引擎，可以对数据存储、搜索、分析</li>
+<li>Logstash是一个数据收集引擎，可以动态收集数据，可以对数据进行过滤、分析，将数据存储到指定的位置</li>
+<li>Kibana是一个数据分析和可视化平台，配合Elasticsearch对数据进行搜索，分析，图表化展示</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-查看日志的命令"><a href="#6-查看日志的命令" class="headerlink" title="6.查看日志的命令"></a>6.查看日志的命令</h3><p>目前采集日志的方式：按天保存到一个日志文件</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233150276.png" alt="image-20230521233150276"></p>
+<p>也可以在logback配置文件中设置日志的目录和名字</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233220905.png" alt="image-20230521233220905"></p>
+<p>需要掌握的Linux中的日志：</p>
+<ul>
+<li><p>实时监控日志的变化</p>
+<p>实时监控某一个日志文件的变化：tail -f xx.log；实时监控日志最后100行日志： tail –n 100 -f xx.log</p>
+</li>
+<li><p>按照行号查询</p>
+<ul>
+<li><p>查询日志尾部最后100行日志：tail – n 100 xx.log</p>
+</li>
+<li><p>查询日志头部开始100行日志：head –n 100 xx.log</p>
+</li>
+<li><p>查询某一个日志行号区间：cat -n xx.log | tail -n +100 | head -n 100 (查询100行至200行的日志)</p>
+</li>
+</ul>
+</li>
+<li><p>按照关键字找日志的信息</p>
+<p>查询日志文件中包含debug的日志行号：cat -n xx.log | grep “debug”</p>
+</li>
+<li><p>按照日期查询</p>
+<p>sed -n ‘&#x2F;2023-05-18 14:22:31.070&#x2F;,&#x2F; 2023-05-18 14:27:14.158&#x2F;p’xx.log </p>
+</li>
+<li><p>日志太多，处理方式</p>
+<ul>
+<li><p>分页查询日志信息：cat -n xx.log |grep “debug” | more</p>
+</li>
+<li><p>筛选过滤以后，输出到一个文件：cat -n xx.log | grep “debug” &gt;debug.txt</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-生产问题怎么排查"><a href="#7-生产问题怎么排查" class="headerlink" title="7.生产问题怎么排查"></a>7.生产问题怎么排查</h3><p>已经上线的bug排查的思路：</p>
+<p>1，先分析日志，通常在业务中都会有日志的记录，或者查看系统日志，或者查看日志文件，然后定位问题</p>
+<p>2，远程debug(通常公司的正式环境（生产环境）是不允许远程debug的。一般远程debug都是公司的测试环境，方便调试代码)</p>
+<p><strong>远程debug配置</strong></p>
+<p>前提条件：<strong>远程的代码和本地的代码要保持一致</strong></p>
+<p>1.远程代码需要配置启动参数，把项目打包放到服务器后启动项目的参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 project-1.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>-agentlib:jdwp</strong>  是通知JVM使用(java debug wire protocol)来运行调试环境</p>
+<p><strong>transport&#x3D;dt_socket</strong>  调试数据的传送方式</p>
+<p><strong>server&#x3D;y</strong>  参数是指是否支持在server模式</p>
+<p><strong>suspend&#x3D;n</strong> 是否在调试客户端建立起来后，再执行JVM。</p>
+<p><strong>address&#x3D;5005</strong>  调试端口设置为5005，其它端口也可以</p>
+</blockquote>
+<p>2.idea中设置远程debug，找到idea中的 Edit Configurations…</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233554657.png" alt="image-20230521233554657"></p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233600556.png" alt="image-20230521233600556"></p>
+<ol start="3">
+<li>idea中启动远程debug<img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233715574.png" alt="image-20230521233715574"></li>
+<li>访问远程服务器，在本地代码中打断点即可调试远程</li>
+</ol>
+<h3 id="8-怎么快速定位系统的瓶颈"><a href="#8-怎么快速定位系统的瓶颈" class="headerlink" title="8.怎么快速定位系统的瓶颈"></a>8.怎么快速定位系统的瓶颈</h3><ul>
+<li><p>压测（性能测试），项目上线之前测评系统的压力</p>
+<ul>
+<li>压测目的：给出系统当前的性能状况；定位系统性能瓶颈或潜在性能瓶颈</li>
+<li>指标：响应时间、 QPS、并发数、吞吐量、 CPU利用率、内存使用率、磁盘IO、错误率</li>
+<li>压测工具：LoadRunner、Apache Jmeter …</li>
+<li>后端工程师：根据压测的结果进行解决或调优（接口慢、代码报错、并发达不到要求…）</li>
+</ul>
+</li>
+<li><p>监控工具、链路追踪工具，项目上线之后监控</p>
+<ul>
+<li>监控工具：Prometheus+Grafana</li>
+<li>链路追踪工具：skywalking、Zipkin</li>
+</ul>
+</li>
+<li><p>线上诊断工具Arthas(阿尔萨斯)，项目上线之后监控、排查</p>
+<ul>
+<li><p>官网：<a target="_blank" rel="noopener" href="https://arthas.aliyun.com/">https://arthas.aliyun.com/</a></p>
+</li>
+<li><p>核心功能：</p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233926897.png" alt="image-20230521233926897"></p>
+<p><img src="/%E5%B8%B8%E8%A7%81%E6%8A%80%E6%9C%AF%E5%9C%BA%E6%99%AF.assets/image-20230521233934644.png" alt="image-20230521233934644"></p>
+</li>
+</ul>
+</li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/09/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%8F%82%E8%80%83%E5%9B%9E%E7%AD%94/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">微服务面试题</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/09/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Sukoshi">
+    
+    
+      <h2>Sukoshi</h2>
+    
+    
+      <p>贵在坚持</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>14</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>flex-block主题部分重构，详情查看https://github.com/miiiku/flex-block</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/miiiku/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">ityyp</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
